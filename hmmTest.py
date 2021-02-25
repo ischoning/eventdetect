@@ -29,19 +29,21 @@ from detect.hmm import *
 from detect.aoi import *
 from detect.movingaverage import *
 from detect.srr import *
+from detect.eventstream import *
 
-print "============= I-VT test ==============="
+print("============= I-VT test ===============")
 
-stream = FileSampleStream('testData/UH27_img_vy_labelled_MN.txt')
+#stream = FileSampleStream('testData/UH27_img_vy_labelled_MN.txt')
+stream = FileSampleStream('1_interpolated_degrees.sav')
 
 fstream = MovingAverageFilter(stream,9)
 
-idt = HMM(fstream, 0.001, 0.001, 0.005, 0.5, 0.95, 0.05, 0.95, 0.05)
+idt = HMM(fstream, 0.001, 0.001, 0.005, 0.5, 0.95, 0.05, 0.95, 0.05) # probabilities coming from where?
 
 fixations = []
 
 for i in idt: 
-	print i
+	print(i)
 	fixations.append(i)
 
 verifStream = FileSampleStream('testData/UH27_img_vy_labelled_MN.txt')
@@ -101,9 +103,9 @@ for f in fixations:
 mPct = matchedSamples / float(fixCount)
 ePct = errorSamples / float(fixCount)
 
-print "Fixations:"
-print "Matched Samples: " + str(matchedSamples) + " (" + str(mPct * 100) + "%)"
-print "Error Samples: " + str(errorSamples) + " (" + str(ePct * 100) + "%)"
+print("Fixations:")
+print("Matched Samples: " + str(matchedSamples) + " (" + str(mPct * 100) + "%)")
+print("Error Samples: " + str(errorSamples) + " (" + str(ePct * 100) + "%)")
 
 matchedSamples = 0
 errorSamples = 0
@@ -122,8 +124,8 @@ for f in fixations:
 
 mPct = matchedSamples / float(saccCount)
 ePct = errorSamples / float(saccCount)
-print "Saccades:"
-print "Matched Samples: " + str(matchedSamples) + " (" + str(mPct * 100) + "%)"
-print "Error Samples: " + str(errorSamples) + " (" + str(ePct * 100) + "%)"
+print("Saccades:")
+print("Matched Samples: " + str(matchedSamples) + " (" + str(mPct * 100) + "%)")
+print("Error Samples: " + str(errorSamples) + " (" + str(ePct * 100) + "%)")
 
 

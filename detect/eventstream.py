@@ -55,6 +55,7 @@ class EventStream(object):
 
 		return pc
 
+
 class DetectorEvent(object):
 	def __init__(self):
 		self.type = "none"
@@ -70,6 +71,7 @@ class EFixation(DetectorEvent):
 	
 	def __str__(self):
 		return "Fixation at (%d,%d) of %d samples, starting at sample %d" % (self.center.x,self.center.y,self.length,self.start.index) 
+
 
 class ESaccade(DetectorEvent):
 	def __init__(self,length,start,end):

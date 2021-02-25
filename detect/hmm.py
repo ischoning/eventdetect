@@ -21,9 +21,9 @@
 ###############################################################################
 
 from . import eventstream
-from eventstream import EventStream
-from eventstream import EFixation
-from eventstream import ESaccade
+from detect.eventstream import EventStream
+from detect.eventstream import EFixation
+from detect.eventstream import ESaccade
 
 import math
 
@@ -71,7 +71,7 @@ class HMM(EventStream):
 		if dt <= 0:
 			# We can't work with a zero or negative time interval, so we
 			# Return a large junk value here in the hope it will be filtered.
-			return 0.0
+			return 0.0 # doesn't velocity of 0.0 imply fixation? junk value should be Nan?
 
 		d = math.sqrt(dx * dx + dy * dy)
 
@@ -80,15 +80,15 @@ class HMM(EventStream):
 	# The probability of observing o in state s (fix=0,sac=1)
 	def emitP(self,s,o):
 		if s == 'fix':
-			p = self.normal(self.fOPm,self.fOPv,o)
+			p = self.normal(self.fOPm,self.fOPv,o) # why do we use gaussian probability?
 			if p == 0:
 				p = 0.0001
-			return math.log(p)
+			return math.log(p) # = -4 if p = 0.0001
 		else:
 			p = self.normal(self.sOPm,self.sOPv,o)
 			if p == 0:
 				p = 0.0001
-			return math.log(p)
+			return math.log(p) # = -4 if p = 0.0001
 
 	def transP(self,s1,s2):
 		if s1 == 'fix' and s2 == 'fix':
@@ -110,8 +110,8 @@ class HMM(EventStream):
 		path = {}
 		states = ('fix','sac')
 		start_p = {}
-		start_p['fix'] = math.log(0.55)
-		start_p['sac'] = math.log(0.45)
+		start_p['fix'] = math.log(0.55) #why 0.55?
+		start_p['sac'] = math.log(0.45) #why 0.45?
 	 
 		for y in states:
 			V[0][y] = start_p[y] + self.emitP(y,obs[0])

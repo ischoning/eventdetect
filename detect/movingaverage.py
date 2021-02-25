@@ -21,7 +21,7 @@
 ###############################################################################
 
 from . import eventstream
-from eventstream import EventStream
+from detect.eventstream import EventStream
 
 class MovingAverageFilter(EventStream):
 	"""

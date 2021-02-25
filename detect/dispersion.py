@@ -21,8 +21,8 @@
 ###############################################################################
 
 from . import eventstream
-from eventstream import EventStream
-from eventstream import EFixation
+from detect.eventstream import EventStream
+from detect.eventstream import EFixation
 
 class Dispersion(EventStream):
 	"""Simple dispersion-based algorithm. 

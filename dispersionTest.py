@@ -24,23 +24,25 @@ from detect.sample import Sample
 from detect.sample import FileSampleStream
 
 from detect.dispersion import *
+from detect.eventstream import *
 from detect.velocity import *
 from detect.hmm import *
-from detect.prefix import *
+#from detect.prefix import *
 from detect.aoi import *
 from detect.movingaverage import *
 from detect.srr import *
 
-print "============= I-DT test ==============="
+print("============= I-DT test ===============")
 
-stream = FileSampleStream('testData/UH27_img_vy_labelled_MN.txt')
+#stream = FileSampleStream('testData/UH27_img_vy_labelled_MN.txt')
+stream = FileSampleStream('1_interpolated_degrees.sav')
 
 idt = Dispersion(stream, 15, 15)
 
 fixations = []
 
 for i in idt: 
-	print i
+	print(i)
 	fixations.append(i)
 
 verifStream = FileSampleStream('testData/UH27_img_vy_labelled_MN.txt')
@@ -77,6 +79,6 @@ for f in fixations:
 mPct = matchedSamples / float(len(eventType))
 ePct = errorSamples / float(len(eventType))
 
-print "Matched Samples: " + str(matchedSamples) + " (" + str(mPct * 100) + "%)"
-print "Error Samples: " + str(errorSamples) + " (" + str(ePct * 100) + "%)"
+print("Matched Samples: " + str(matchedSamples) + " (" + str(mPct * 100) + "%)")
+print("Error Samples: " + str(errorSamples) + " (" + str(ePct * 100) + "%)")
 

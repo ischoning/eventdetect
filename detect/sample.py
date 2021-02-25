@@ -37,7 +37,7 @@ class Sample(object):
 
 class SampleStream(object):
 	def __init__(self):
-		raise "SampleStream shouldn't be instantiated directly. Use FileSampleStream or ListSampleStream."
+		raise("SampleStream shouldn't be instantiated directly. Use FileSampleStream or ListSampleStream.")
 
 	def __iter__(self):
 		return self
