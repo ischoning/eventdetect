@@ -42,18 +42,28 @@ class SampleStream(object):
 	def __iter__(self):
 		return self
 
-	def next(self):
+	def __next__(self):
 		raise StopIteration
+
+	def next(self):
+		return self.__next__()
 
 class ListSampleStream(SampleStream):
 	def __init__(self,data):
 		self.data = list(data)
+
+	def __len__(self):
+		return len(self.data)
 	
-	def next(self):
+	def __next__(self):
 		if len(self.data) == 0:
+			#print("length of data is 0")
 			raise StopIteration
 
 		return self.data.pop(0)
+
+	def next(self):
+		return self.__next__()
 
 class FileSampleStream(SampleStream):
 	def __init__(self,filename):
@@ -61,7 +71,7 @@ class FileSampleStream(SampleStream):
 		self.handle.readline() # skip header
 		self.index = 0
 
-	def next(self):
+	def __next__(self):
 		line = self.handle.readline()
 		if line == '':
 			raise StopIteration
@@ -76,4 +86,7 @@ class FileSampleStream(SampleStream):
 		s.eventType = int(f[3][:-1])
 
 		return s
+
+	def next(self):
+		return self.__next__()
 

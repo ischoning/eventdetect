@@ -21,9 +21,9 @@
 ###############################################################################
 
 from . import eventstream
-from eventstream import EventStream
-from eventstream import EFixation
-from eventstream import ESaccade
+from detect.eventstream import EventStream
+from detect.eventstream import EFixation
+from detect.eventstream import ESaccade
 
 import math
 import random
@@ -145,12 +145,12 @@ class EngbertKliegl(EventStream):
 
 		r = None
 
-		print "x"
-		print v.vx
-		print sdx
-		print "y"
-		print v.vy
-		print sdy
+		print("x")
+		print(v.vx)
+		print(sdx)
+		print("y")
+		print(v.vy)
+		print(sdy)
 		if v.vx >= sdx * self.threshold and v.vy >= sdy * self.threshold:
 			self.inSacc = True
 

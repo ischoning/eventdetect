@@ -62,7 +62,7 @@ class Dispersion(EventStream):
 		return maxx - minx + maxy - miny
 
 
-	def next(self):
+	def __next__(self):
 		# Fill the window with samples.
 		self.fillWindow()
 
@@ -101,6 +101,8 @@ class Dispersion(EventStream):
 			# Recurse.
 			return self.next()
 
+	def next(self):
+		return self.__next__()
 
 
 		

@@ -71,7 +71,7 @@ class HMM(EventStream):
 		if dt <= 0:
 			# We can't work with a zero or negative time interval, so we
 			# Return a large junk value here in the hope it will be filtered.
-			return 0.0 # doesn't velocity of 0.0 imply fixation? junk value should be Nan?
+			return 0.0 # <-- doesn't velocity of 0.0 imply fixation? junk value should be Nan?
 
 		d = math.sqrt(dx * dx + dy * dy)
 
@@ -83,7 +83,7 @@ class HMM(EventStream):
 			p = self.normal(self.fOPm,self.fOPv,o) # why do we use gaussian probability?
 			if p == 0:
 				p = 0.0001
-			return math.log(p) # = -4 if p = 0.0001
+			return math.log(p) # = -4 if p = 0.0001 (work in logs to avoid zero probabilities?)
 		else:
 			p = self.normal(self.sOPm,self.sOPv,o)
 			if p == 0:
@@ -114,7 +114,7 @@ class HMM(EventStream):
 		start_p['sac'] = math.log(0.45) #why 0.45?
 	 
 		for y in states:
-			V[0][y] = start_p[y] + self.emitP(y,obs[0])
+			V[0][y] = start_p[y] + self.emitP(y,obs[0]) # not multiply?
 			path[y] = [y]
 	 
 		for t in range(1,len(obs)):
@@ -122,6 +122,7 @@ class HMM(EventStream):
 			newpath = {}
 	 
 			for y in states:
+				# prob = start_p + trans_p + emit_p (not *???)
 				(prob, state) = max([(V[t-1][y0] + self.transP(y0,y) + self.emitP(y,obs[t]), y0) for y0 in states])
 				V[t][y] = prob
 				newpath[y] = path[state] + [y]
@@ -133,7 +134,7 @@ class HMM(EventStream):
 		return (prob, path[state])
 
 
-	def next(self):
+	def __next__(self):
 		# Check if there is pre-computed output that can be returned.
 		if len(self.output) > 0:
 			return self.output.pop(0)
@@ -198,4 +199,7 @@ class HMM(EventStream):
 			return self.output.pop(0)
 		else:
 			raise StopIteration
+
+	def next(self):
+		return self.__next__()
 

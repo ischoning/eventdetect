@@ -29,97 +29,97 @@ saccadeTb = pd.DataFrame()
 
 
 
-print('-----------------------Start!-----------------------')  
+print('-----------------------Start!-----------------------')
 
 #print(degreesTb[degreesTb.current_stimulus < 1].index)
 
 if 'old_index' not in fixationTb.columns:
     fixationTb.insert(0,"old_index",np.int)
-    
+
 if 'timestamp_milis' not in fixationTb.columns:
     fixationTb.insert(1,"timestamp_milis",np.float32)
-    
+
 # centroid of fixation
 if 'fixation_x' not in fixationTb.columns:
     fixationTb.insert(2,"fixation_x",0)
     fixationTb['fixation_x'] = fixationTb['fixation_x'].astype(np.float32)
-    
+
 # centroid of fixation
 if 'fixation_y' not in fixationTb.columns:
     fixationTb.insert(3,"fixation_y",0)
     fixationTb['fixation_y'] = fixationTb['fixation_y'].astype(np.float32)
-    
+
 if 'fixation_start_ts' not in fixationTb.columns:
     fixationTb.insert(4,"fixation_start_ts",0)
     fixationTb['fixation_start_ts'] = fixationTb['fixation_start_ts'].astype(np.float32)
-    
+
 if 'fixation_end_ts' not in fixationTb.columns:
     fixationTb.insert(5,"fixation_end_ts",0)
     fixationTb['fixation_end_ts'] = fixationTb['fixation_end_ts'].astype(np.float32)
-    
+
 if 'saccade_start_ts' not in fixationTb.columns:
     fixationTb.insert(6,"saccade_start_ts",0)
     fixationTb['saccade_start_ts'] = fixationTb['saccade_start_ts'].astype(np.float32)
-    
+
 if 'saccade_end_ts' not in fixationTb.columns:
     fixationTb.insert(7,"saccade_end_ts",0)
     fixationTb['saccade_end_ts'] = fixationTb['saccade_end_ts'].astype(np.float32)
-    
+
 if 'vision_simulation' not in fixationTb.columns:
     fixationTb.insert(8,"vision_simulation",0)
-    
+
 if 'image_enhancement' not in fixationTb.columns:
     fixationTb.insert(9,"image_enhancement",0)
-    
+
 if 'current_stimulus' not in fixationTb.columns:
     fixationTb.insert(10,"current_stimulus",0)
-    
+
 if 'array_difficulty' not in fixationTb.columns:
     fixationTb.insert(11,"array_difficulty",0)
-    
+
 if 'response_correct' not in fixationTb.columns:
     fixationTb.insert(12,"response_correct",0)
-    
+
 if 'key_response_time' not in fixationTb.columns:
     fixationTb.insert(13,"key_response_time",np.nan)
-    fixationTb['key_response_time'] = fixationTb['key_response_time'].astype(np.float64) 
-    
+    fixationTb['key_response_time'] = fixationTb['key_response_time'].astype(np.float64)
+
 if 'participant_id' not in fixationTb.columns:
     fixationTb.insert(14,"participant_id",0)
 
 if 'saccade_amplitude' not in fixationTb.columns:
     fixationTb.insert(15,"saccade_amplitude",0)
     fixationTb['saccade_amplitude'] = fixationTb['saccade_amplitude'].astype(np.float32)
-    
+
     #sum of saccade_amplitudes per stimulus
 if 'scan_path' not in fixationTb.columns:
     fixationTb.insert(16,"scan_path",0)
     fixationTb['scan_path'] = fixationTb['scan_path'].astype(np.float32)
-    
+
 if 'saccade_duration' not in fixationTb.columns:
     fixationTb.insert(17,"saccade_duration",0)
     fixationTb['saccade_duration'] = fixationTb['saccade_duration'].astype(np.float32)
-#"""  
+#"""
 if 'mean_stimul_fixation' not in fixationTb.columns:
     fixationTb.insert(18,"mean_stimul_fixation",0)
     fixationTb['mean_stimul_fixation'] = fixationTb['mean_stimul_fixation'].astype(np.float32)
-    
+
 if 'median_stimul_fixation' not in fixationTb.columns:
     fixationTb.insert(19,"median_stimul_fixation",0)
     fixationTb['median_stimul_fixation'] = fixationTb['median_stimul_fixation'].astype(np.float32)
-    
+
 if 'std_stimul_fixation' not in fixationTb.columns:
     fixationTb.insert(20,"std_stimul_fixation",0)
     fixationTb['std_stimul_fixation'] = fixationTb['std_stimul_fixation'].astype(np.float32)
-    
+
 if 'mean_stimul_saccade' not in fixationTb.columns:
     fixationTb.insert(21,"mean_stimul_saccade",0)
     fixationTb['mean_stimul_saccade'] = fixationTb['mean_stimul_saccade'].astype(np.float32)
-    
+
 if 'median_stimul_saccade' not in fixationTb.columns:
     fixationTb.insert(22,"median_stimul_saccade",0)
     fixationTb['median_stimul_saccade'] = fixationTb['median_stimul_saccade'].astype(np.float32)
-    
+
 if 'std_stimul_saccade' not in fixationTb.columns:
     fixationTb.insert(23,"std_stimul_saccade",0)
     fixationTb['std_stimul_saccade'] = fixationTb['std_stimul_saccade'].astype(np.float32)
@@ -134,24 +134,24 @@ for i in range (0, len(degreesTb)):
         if degreesTb.at[i+y,'current_stimulus'] != 0 :
             ts = degreesTb.at[i,'timestamp_milis']
             ts_offset = degreesTb.at[i,'timestamp_milis']
-            
+
             y = 1
             while degreesTb.at[i+y,'current_stimulus'] == stimulus:
                     degreesTb.at[i + y,'key_response_time'] = krt
                     y += 1
-print('-----------------------Done copying!-----------------------')  
+print('-----------------------Done copying!-----------------------')
 """
 
 if os.path.isfile('C:/Users/marek/source/repos/data-cleanup/preprocessed/new_interpolated/0' +  xxx[54:-5] + '_ts.csv'):
     degreesTb.to_csv('C:/Users/marek/source/repos/data-cleanup/preprocessed/new_interpolated/0' +  xxx[54:-5] + '_ts.csv')
 else:
     degreesTb.to_csv('C:/Users/marek/source/repos/data-cleanup/preprocessed/new_interpolated/0' +  xxx[54:-5] + '_ts.csv')
-"""    
+"""
 
 # KEEP ROW ONLY WITH STIMULUS != 0
 #index_zero_stimulus = degreesTb[degreesTb['current_stimulus'] == 0].index
-#degreesTb.drop(index_zero_stimulus, inplace=True)      
-#print('-----------------------Done removing!----------------------')   
+#degreesTb.drop(index_zero_stimulus, inplace=True)
+#print('-----------------------Done removing!----------------------')
 
 # -----------------------DISPERSION ALGORITHM-----------------------
 sampleFields = ['timestamp_milis', 'degrees_right_horizontal', 'degrees_right_vertical']
@@ -165,7 +165,7 @@ for i in degreesTb.index:
     #print('this many')
 
 # Dispersion algorithm:
-windowSize = 10 #unit = samples
+windowSize = 10 # unit = samples
 threshold = 1.5
 
 #initialize Dispersion
