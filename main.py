@@ -46,7 +46,8 @@ def show_dispersion():
     plt.show()
 
 def read_unfiltered():
-    df = pd.read_csv('participant07_preprocessed172.csv')
+    df = pd.read_csv('/Users/ischoning/PycharmProjects/GitHub/data/participant08_preprocessed172.csv')
+    df = df[100:int(len(df) / 500)]
 
     # assign relevant data
     lx = df['left_forward_x']
@@ -65,8 +66,6 @@ def read_unfiltered():
     df['Ay_right'] = np.rad2deg(np.arctan2(ry, rz))
 
     # average visual angle between both eyes along each plane
-    df['Avg_angular_x'] = df[['Ax_left', 'Ax_right']].mean(axis=1)
-    df['Avg_angular_y'] = df[['Ay_left', 'Ay_right']].mean(axis=1)
     avg_ang_x = df['Avg_angular_x']
     avg_ang_y = df['Avg_angular_y']
 
@@ -80,7 +79,9 @@ def read_unfiltered():
     return df
 
 def read_filtered():
-    df = pd.read_csv('07_interpolated_degree_<100ms.csv')
+    df = pd.read_csv('/Users/ischoning/PycharmProjects/GitHub/data/participant08_preprocessed172.csv')
+    df = df[100:int(len(df) / 500)]
+    print(df.dtypes)
     return df
 
 def viterbi(obs, states, start_p, trans_p, emit_p):
@@ -168,7 +169,17 @@ def main():
 
     # TODO: Calculate starting probabilities, means, variances
 
-    # velocities
+    # if velocity is greater than 3 standard deviations from the mean of the pmf, classify the point as saccade, else fixation
+    # NOTE that the white space in the plot is due to jump in ms between events
+    states = ['Saccade', 'Fixation']
+    df['fix1 sac0'] = np.where(v <= 0.02, 1, 0)
+    event = df['fix1 sac0']
+
+    # estimate priors (sample means)
+    mean_fix = np.mean(df[event == 1]['ang_vel'])
+    mean_sac = np.mean(df[event == 0]['ang_vel'])
+    std_fix = np.std(df[event == 1]['ang_vel'])
+    std_sac = np.std(df[event == 0]['ang_vel'])
 
     obs = df['interp_samplevelocity_right'][1:len(df)] # NoneType in row 0
     # obs = obs.dropna()
@@ -191,8 +202,9 @@ def main():
             probs[o] = emitP(s, o)
         emit_p[s] = probs
 
-    viterbi(obs, states, start_p, trans_p, emit_p)
-
+    #viterbi(obs, states, start_p, trans_p, emit_p)
+    stream = ListSampleStream(testPath)
+    h2 = HMM(stream, mean_fix, std_fix, mean_sac, std_sac, 0.95, 0.05, 0.95, 0.05)
 
 
 

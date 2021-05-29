@@ -81,7 +81,7 @@ class HMM(EventStream):
 	def emitP(self,s,o):
 		if s == 'fix':
 			p = self.normal(self.fOPm,self.fOPv,o) # why do we use gaussian probability?
-			if p == 0:
+			if p == 0: # can't take log of a zero
 				p = 0.0001
 			return math.log(p) # = -4 if p = 0.0001 (work in logs to avoid zero probabilities?)
 		else:
@@ -110,8 +110,8 @@ class HMM(EventStream):
 		path = {}
 		states = ('fix','sac')
 		start_p = {}
-		start_p['fix'] = math.log(0.55) #why 0.55?
-		start_p['sac'] = math.log(0.45) #why 0.45?
+		start_p['fix'] = math.log(0.55)
+		start_p['sac'] = math.log(0.45)
 	 
 		for y in states:
 			V[0][y] = start_p[y] + self.emitP(y,obs[0]) # not multiply?

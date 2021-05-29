@@ -253,7 +253,7 @@ def saccto(x1,y1,x2,y2,offset,samples,timeInterval):
 	
 	return l
 
-
+# Q: What's offset?
 def fixate(x,y,offset,samples,timeInterval):
 	l = []
 
@@ -268,10 +268,12 @@ testPath.extend(saccto(250,250,550,550,50,100,0.001))
 testPath.extend(fixate(550,550,151,99,0.001))
 testPath.extend(saccto(550,550,350,150,251,99,0.001))
 testPath.extend(fixate(350,150,251,49,0.001))
-"""
+
 print("============= I-DT test ===============")
 
 stream = ListSampleStream(testPath)
+for s in stream:
+	print(s)
 d = Dispersion(stream, 3, 5)
 
 for i in d:
@@ -283,7 +285,7 @@ v = Velocity(IntersampleVelocity(stream), 5)
 
 for i in v:
 	print(i)
-
+"""
 print("============= I-HMM test ===============")
 testPathB = fixate(500,500,0,3,0.001)
 testPathB.extend(saccto(500,500,400,400,4,4,0.001))
@@ -308,7 +310,7 @@ for i in h2:
 """
 print(" * Test 3:")
 
-df = pd.read_csv('participant07_preprocessed172.csv')
+df = pd.read_csv('/Users/ischoning/PycharmProjects/GitHub/data/participant07_preprocessed172.csv')
 
 # shorten dataset for time efficiency
 df = df[0:int(len(df)/100)]
