@@ -4,14 +4,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 import numpy as np
-#import hmmTest
-import math
 
-from detect.eventstream import *
-from detect.sample import *
-from test import *
 
-def show_dispersion():
+def main():
     # plot fixations and saccades
     df = pd.read_csv('fixations_final_data.csv')
     print(df.columns)
@@ -29,6 +24,7 @@ def show_dispersion():
     s_amp = df['saccade_amplitude']
     s_len = df['saccade_duration']
 
+
     plt.scatter(fx, fy)
     plt.title('fx vs fy')
     plt.show()
@@ -45,6 +41,7 @@ def show_dispersion():
     plt.title('saccade amplitude')
     plt.show()
 
+<<<<<<< HEAD
 def read_unfiltered():
     df = pd.read_csv('/Users/ischoning/PycharmProjects/GitHub/data/participant08_preprocessed172.csv')
     df = df[100:int(len(df) / 500)]
@@ -207,6 +204,8 @@ def main():
     h2 = HMM(stream, mean_fix, std_fix, mean_sac, std_sac, 0.95, 0.05, 0.95, 0.05)
 
 
+=======
+>>>>>>> parent of e9456f2 (hmm)
 
 if __name__ == "__main__":
     # Testing
@@ -215,7 +214,6 @@ if __name__ == "__main__":
     # data pipeline
     if not os.path.isfile('fixations_final_data.csv'):
         import degrees_of_vision_spyder
-        show_dispersion()
 
     # run analysis
     main()

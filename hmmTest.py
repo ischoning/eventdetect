@@ -19,24 +19,22 @@
 #  action of contract, negligence or other tortious action, arising out
 #  of or in connection with the use or performance of this software.
 ###############################################################################
-#from detect.sample import Sample
-from detect.sample import FileSampleStream
-
-#from detect.dispersion import *
-#from detect.velocity import *
-from detect.hmm import *
-#from detect.aoi import *
-from detect.movingaverage import *
-#from detect.srr import *
-from detect.eventstream import *
 
 from detect.sample import Sample
-from detect.sample import ListSampleStream
+from detect.sample import FileSampleStream
 
+from detect.dispersion import *
+from detect.velocity import *
+from detect.hmm import *
+from detect.aoi import *
+from detect.movingaverage import *
+from detect.srr import *
+from detect.eventstream import *
 
 print("============= I-VT test ===============")
 
-stream = FileSampleStream('testData/UH27_img_vy_labelled_MN.txt')
+#stream = FileSampleStream('testData/UH27_img_vy_labelled_MN.txt')
+stream = FileSampleStream('1_interpolated_degrees.sav')
 
 fstream = MovingAverageFilter(stream,9)
 
@@ -44,7 +42,7 @@ idt = HMM(fstream, 0.001, 0.001, 0.005, 0.5, 0.95, 0.05, 0.95, 0.05) # probabili
 
 fixations = []
 
-for i in idt:
+for i in idt: 
 	print(i)
 	fixations.append(i)
 
@@ -61,7 +59,7 @@ for i in verifStream:
 		eventType.append(0)
 		if len(cfix) == 0:
 			continue
-		print("Fixation of length: " + str(len(cfix)) + " starting at sample " + str(cfix[0].index))
+		print ("Fixation of length: " + str(len(cfix)) + " starting at sample " + str(cfix[0].index))
 		p = idt.centroid(cfix)
 
 		f = EFixation(p, len(cfix), cfix[0], cfix[-1])

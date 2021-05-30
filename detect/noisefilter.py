@@ -21,7 +21,7 @@
 ###############################################################################
 
 from . import eventstream
-from detect.eventstream import EventStream
+from eventstream import EventStream
 
 import math
 import random

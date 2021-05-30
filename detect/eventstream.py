@@ -30,12 +30,9 @@ class EventStream(object):
 	def __iter__(self):
 		return self
 
-	def __next__(self):
+	def next(self):
 		"""Event detectors should override the next method."""
 		raise StopIteration
-
-	def next(self):
-		return self.__next__()
 
 	def centroid(self,window):
 		"""Compute a centroid for a window of points."""

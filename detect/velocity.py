@@ -21,8 +21,8 @@
 ###############################################################################
 
 from . import eventstream
-from detect.eventstream import EventStream
-from detect.eventstream import EFixation
+from eventstream import EventStream
+from eventstream import EFixation
 
 import math
 
@@ -62,7 +62,7 @@ class Velocity(EventStream):
 		return d / float(dt)
 		
 
-	def __next__(self):
+	def next(self):
 		fixation = []
 
 		for curr in self.input:
@@ -91,7 +91,4 @@ class Velocity(EventStream):
 		else:
 			c = self.centroid(fixation)
 			return EFixation(c,len(fixation),fixation[0],fixation.pop())
-
-	def next(self):
-		return self.__next__()
 

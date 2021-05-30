@@ -21,8 +21,8 @@
 ###############################################################################
 
 from . import eventstream
-from detect.eventstream import EventStream
-from detect.eventstream import EFixation
+from eventstream import EventStream
+from eventstream import EFixation
 
 class AOI(EventStream):
 	"""Areas of Interest event detection. 

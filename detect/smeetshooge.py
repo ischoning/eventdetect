@@ -21,9 +21,9 @@
 ###############################################################################
 
 from . import eventstream
-from detect.eventstream import EventStream
-from detect.eventstream import EFixation
-from detect.eventstream import ESaccade
+from eventstream import EventStream
+from eventstream import EFixation
+from eventstream import ESaccade
 import math
 import numpy as np
 

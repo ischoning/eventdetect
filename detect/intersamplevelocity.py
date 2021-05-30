@@ -21,7 +21,7 @@
 ###############################################################################
 
 from . import eventstream
-from detect.eventstream import EventStream
+from eventstream import EventStream
 
 import math
 
@@ -49,7 +49,7 @@ class IntersampleVelocity(EventStream):
 
 		return d / float(dt)
 		
-	def __next__(self):
+	def next(self):
 		curr = self.input.next()
 
 		curr.velocity = self.intersampleVelocity(self.prev,curr)
@@ -57,8 +57,5 @@ class IntersampleVelocity(EventStream):
 		self.prev = curr
 
 		return curr
-
-	def next(self):
-		return self.__next__()
 
 
